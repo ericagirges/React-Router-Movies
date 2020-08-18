@@ -25,7 +25,18 @@ const App = () => {
   }, []);
 
   const addToSavedList = id => {
-    // This is stretch. Prevent the same movie from being "saved" more than once
+    // find saved movie
+    const savedMovie = saved.find(movie => movie.id === id);
+
+    // find movie object by id
+    const movie = movieList.find(movie => movie.id === id);
+
+    // if saved movie exists, alert the user
+    if (savedMovie) {
+      alert("This movie has already been added to your saved list.");
+    } else {
+      setSaved([...saved, movie])
+    }
   };
 
   return (
@@ -33,7 +44,7 @@ const App = () => {
       <SavedList list={saved} />
       <Switch>
         <Route path='/' exact><MovieList movies={movieList}/></Route>
-        <Route path='/movies/:id'><Movie /></Route>
+        <Route path='/movies/:id' ><Movie addToSavedList={addToSavedList} /></Route>
       </Switch>
     </div>
   );
